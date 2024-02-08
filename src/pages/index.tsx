@@ -25,7 +25,7 @@ export default function Index() {
               heading
               className='ml-6 text-gray-500 transition ease-in-out hover:cursor-pointer hover:text-gray-400'
             >
-              <Link target='_blank' rel='noreferrer noopener' href='https://t.me/+GBROrLjKoO0yMjNl'>
+              <Link target='_blank' rel='noreferrer noopener' href='https://t.me/grails404'>
                 JOIN US ON TELEGRAM
               </Link>
             </MainText>
