@@ -8,12 +8,22 @@ export default function Index() {
       <Box center className='min-h-[90vh]'>
         <Box col className='max-w-[50vw]'>
           <Box center className='mb-6'>
-            <Image src='/assets/item.png' alt='' width={88} height={88} />
+            <Box center className='mr-6'>
+              <Image src='/assets/weapon.png' alt='' width={80} height={80} />
+            </Box>
+            <Box center>
+              <Image src='/assets/character.png' alt='' width={80} height={80} />
+            </Box>
+            <Box center className='ml-6'>
+              <Image src='/assets/item.png' alt='' width={60} height={60} />
+            </Box>
           </Box>
-          <MainText>
-            A COLLECTION OF 10,000 GRAILS, BOUND TO THE ERC404 STANDARD INTRODUCED BY PANDORA, AN EXPERIMENTAL TOKEN
-            STANDARD ENABLING PERSISTENT LIQUIDITY AND SEMI-FUNGIBILITY FOR STARKNET NFTS. OUR WEBSITE IS CURRENTLY
-            RECEIVING UPDATES.
+          <MainText heading>
+            a collection of 10,000 grails on starknet
+            <br />
+            collect. trade. build.
+            <br />
+            powered by the erc404 standard
           </MainText>
           <Box center className='mt-4'>
             <MainText heading className='text-gray-500 transition ease-in-out hover:cursor-pointer hover:text-gray-400'>
