@@ -15,7 +15,13 @@ export default function Index() {
               <Image src='/assets/character.png' alt='' width={80} height={80} />
             </Box>
             <Box center className='ml-6'>
-              <Image src='/assets/item.png' alt='' width={60} height={60} />
+              <Image src='/assets/item.png' alt='' width={80} height={80} />
+            </Box>
+            <Box center className='ml-6'>
+              <Image src='/assets/armor.png' alt='' width={80} height={80} />
+            </Box>
+            <Box center className='ml-6'>
+              <Image src='/assets/potion.png' alt='' width={88} height={88} />
             </Box>
           </Box>
           <MainText heading>
