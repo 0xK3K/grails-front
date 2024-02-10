@@ -1,6 +1,15 @@
 import { MainText } from '@/components/Layout'
 import { shortenAddress } from '@/misc'
-import { Navbar, NavbarBrand, NavbarContent } from '@nextui-org/react'
+import {
+  Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Navbar,
+  NavbarBrand,
+  NavbarContent
+} from '@nextui-org/react'
 import WalletModal from '@/components/WalletModal'
 import { useAccount, useDisconnect } from '@starknet-react/core'
 import Image from 'next/image'
@@ -11,31 +20,46 @@ export default function Header() {
   const { disconnect } = useDisconnect()
 
   return (
-    <>
-      <Navbar className='gradient-dark-element bg-main/20 relative !sticky z-50 mb-10' maxWidth='2xl'>
-        <NavbarBrand>
-          <Link href='/'>
-            <Image src='/assets/item.png' width={40} height={40} alt='' />
-          </Link>
-        </NavbarBrand>
-        <NavbarContent justify='end'>
-          {/*!!pendingTransactions.length && (
-            <Box center className='relative rounded-3xl border border-gray-500 bg-black/60 p-0.5'>
-              <MainText className='absolute'>{pendingTransactions.length}</MainText>
-              <Spinner size='sm' color='white' />
-            </Box>
-          )*/}
-          {address ? (
-            <div onClick={() => disconnect()} className='cursor-pointer'>
-              <MainText heading className='text-white'>
-                {shortenAddress(address)}
-              </MainText>
-            </div>
-          ) : (
-            <WalletModal />
-          )}
-        </NavbarContent>
-      </Navbar>
-    </>
+    <Navbar className='bg-main/20 z-50 mb-10' maxWidth='2xl'>
+      <NavbarBrand>
+        <Link href='/'>
+          <Image src='/assets/item.png' width={40} height={40} alt='' />
+        </Link>
+      </NavbarBrand>
+      <NavbarContent justify='end'>
+        {address ? (
+          <Dropdown type='menu' classNames={{ content: 'p-0 bg-transparent' }} placement='bottom-end'>
+            <DropdownTrigger>
+              <Button variant='ghost' className='border-none'>
+                <MainText heading className='cursor-pointer text-white'>
+                  {shortenAddress(address)}
+                </MainText>
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu
+              aria-label='Custom item styles'
+              disabledKeys={['profile']}
+              className='rounded-md border-1 border-gray-400/20 p-1'
+              itemClasses={{
+                base: ['text-gray-500', 'transition-opacity', 'data-[hover=true]:text-gray-400']
+              }}
+            >
+              <DropdownItem variant='bordered' className='border-none text-end'>
+                <Link href='/items'>
+                  <MainText heading>ITEMS</MainText>
+                </Link>
+              </DropdownItem>
+              <DropdownItem variant='bordered' className='border-none text-end'>
+                <div onClick={() => disconnect()}>
+                  <MainText heading>DISCONNECT</MainText>
+                </div>
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        ) : (
+          <WalletModal />
+        )}
+      </NavbarContent>
+    </Navbar>
   )
 }

@@ -5,9 +5,9 @@ import Head from 'next/head'
 import { NextUIProvider } from '@nextui-org/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import StarknetConfigWrapper from '@/components/StarknetConfigWrapper'
+import { ToastContainer } from 'react-toastify'
 import '@/styles/globals.css'
 import 'react-toastify/dist/ReactToastify.css'
-import { ToastContainer } from 'react-toastify'
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(
@@ -33,8 +33,8 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel='apple-touch-icon' type='image/png' href='/favicon/apple-touch-icon.png' />
         <title>Grails</title>
       </Head>
-      <NextUIProvider>
-        <main className='text-foreground dark'>
+      <main className='text-foreground dark'>
+        <NextUIProvider>
           <QueryClientProvider client={queryClient}>
             <StarknetConfigWrapper>
               <ToastContainer
@@ -49,8 +49,8 @@ export default function App({ Component, pageProps }: AppProps) {
               <Component {...pageProps} />
             </StarknetConfigWrapper>
           </QueryClientProvider>
-        </main>
-      </NextUIProvider>
+        </NextUIProvider>
+      </main>
     </>
   )
 }
