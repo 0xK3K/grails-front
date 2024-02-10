@@ -1,11 +1,14 @@
 import { Box, Container, MainText } from '@/components/Layout'
+import { useAccount } from '@starknet-react/core'
 import Image from 'next/image'
 import Link from 'next/link'
 
 export default function Index() {
+  const { isConnected } = useAccount()
+
   return (
     <Container className='h-[100%] max-w-[1400px]'>
-      <Box center className='min-h-[90vh]'>
+      <Box center className='min-h-[70vh]'>
         <Box col className='max-w-[50vw]'>
           <Box center className='mb-6'>
             <Box center className='mr-6'>
@@ -37,10 +40,17 @@ export default function Index() {
                 FOLLOW GRAILS ON X
               </Link>
             </MainText>
-            <MainText
-              heading
-              className='ml-6 text-gray-500 transition ease-in-out hover:cursor-pointer hover:text-gray-400'
-            >
+            {!isConnected ? (
+              <div className='mx-5' />
+            ) : (
+              <MainText
+                heading
+                className='mx-10 text-gray-500 transition ease-in-out hover:cursor-pointer hover:text-gray-400'
+              >
+                <Link href='/mint'>MINT</Link>
+              </MainText>
+            )}
+            <MainText heading className='text-gray-500 transition ease-in-out hover:cursor-pointer hover:text-gray-400'>
               <Link target='_blank' rel='noreferrer noopener' href='https://t.me/grails404'>
                 JOIN US ON TELEGRAM
               </Link>
