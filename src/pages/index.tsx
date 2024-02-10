@@ -29,9 +29,7 @@ export default function Index() {
           </Box>
           <MainText heading>
             a collection of 10,000 grails on starknet
-            <br />
-            collect. trade. build.
-            <br />
+            <div className='my-4'>collect. trade. build.</div>
             powered by the erc404 standard
           </MainText>
           <Box center className='mt-4'>

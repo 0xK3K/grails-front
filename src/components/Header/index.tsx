@@ -19,6 +19,12 @@ export default function Header() {
           </Link>
         </NavbarBrand>
         <NavbarContent justify='end'>
+          {/*!!pendingTransactions.length && (
+            <Box center className='relative rounded-3xl border border-gray-500 bg-black/60 p-0.5'>
+              <MainText className='absolute'>{pendingTransactions.length}</MainText>
+              <Spinner size='sm' color='white' />
+            </Box>
+          )*/}
           {address ? (
             <div onClick={() => disconnect()} className='cursor-pointer'>
               <MainText heading className='text-white'>
