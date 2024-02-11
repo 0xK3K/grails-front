@@ -62,6 +62,11 @@ export default function Header() {
                 </Link>
               </DropdownItem>
               <DropdownItem variant='bordered' className='border-none text-end'>
+                <Link href='/mint'>
+                  <MainText heading>MINT</MainText>
+                </Link>
+              </DropdownItem>
+              <DropdownItem variant='bordered' className='border-none text-end'>
                 <div onClick={() => disconnect()}>
                   <MainText heading>DISCONNECT</MainText>
                 </div>

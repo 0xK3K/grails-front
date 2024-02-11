@@ -24,14 +24,12 @@ export default function Backpack() {
         return 'animate-[boxPulse_5s_ease-in-out_infinite_alternate]'
       case 3:
         return 'animate-[boxScale_5s_ease-in-out_infinite_alternate]'
+      case 4:
+        return 'animate-[boxSlide_3s_ease-in-out_infinite]'
     }
   }, [])
 
   const ids = useMemo(() => (data as Array<bigint>)?.map((id) => Number(id.toString())) || [], [data])
-  const gridStyle = useMemo(() => {
-    const length = ids.length
-    return `grid-cols-${Math.min(3, length)} gap-6 sm:grid-cols-${Math.min(4, length)} md:grid-cols-${Math.min(5, length)} lg:grid-cols-${Math.min(6, length)}`
-  }, [ids.length])
 
   return (
     <Container className='h-[100%] max-w-[1400px]'>
@@ -46,9 +44,9 @@ export default function Backpack() {
         ) : !ids.length ? (
           <MainText heading>your inventory is empty...</MainText>
         ) : (
-          <Box className={`mx-auto grid max-w-[1200px] px-4 sm:px-6 lg:px-8 ${gridStyle}`}>
-            {ids.map((id) => (
-              <Box col center className='m-3'>
+          <Box center className={`mx-auto max-w-[1200px] flex-wrap`}>
+            {ids.map((id, index) => (
+              <Box key={index} col center className='m-3'>
                 <Image
                   src={`/assets/box_${(id % 4) + 1}.png`}
                   alt=''

@@ -11,7 +11,7 @@ module.exports = {
       },
       keyframes: {
         boxBounce: {
-          '0%, 100%': { transform: 'translateY(-5%)', animationTimingFunction: 'ease-in-out' },
+          '0%, 100%': { transform: 'translateY(-10%)', animationTimingFunction: 'ease-in-out' },
           '50%': { transform: 'translateY(0)', animationTimingFunction: 'ease-in-out' }
         },
         boxPulse: {
@@ -19,8 +19,13 @@ module.exports = {
           '40%, 50%, 60%': { opacity: 1 }
         },
         boxScale: {
-          '0%, 100%': { transform: 'scale(0.95)' },
-          '50%': { transform: 'scale(1.05)' }
+          '0%, 100%': { transform: 'scale(0.9)' },
+          '50%': { transform: 'scale(1.1)' }
+        },
+        boxSlide: {
+          '0%': { opacity: 0, transform: 'translateX(-20px)' },
+          '50%': { opacity: 1 },
+          '100%': { opacity: 0, transform: 'translateX(20px)' }
         }
       }
     },

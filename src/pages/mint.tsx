@@ -8,6 +8,7 @@ import { useAccount, useContractRead, useContractWrite, useNetwork } from '@star
 import Image from 'next/image'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Call, num } from 'starknet'
+import { format } from 'timeago.js'
 
 export default function Mint() {
   const { address, isConnected } = useAccount()
@@ -17,8 +18,8 @@ export default function Mint() {
   const [number, setNumber] = useState(0)
 
   const isWhitelisted = useMemo(() => !!address && whitelist.includes(address), [address])
-  const mintEnabled = useMemo(() => isWhitelisted || Date.now() / 1000 > 1707696000, [isWhitelisted])
-  const timeLeft = useMemo(() => '3 hours', [])
+  const mintEnabled = useMemo(() => isWhitelisted || Date.now() / 1000 > 1707706800, [isWhitelisted])
+  const timeLeft = useMemo(() => 1707706800000, [])
 
   const { data: allocation } = useContractRead({
     address: getContracts(chain)!.mint,
@@ -108,19 +109,16 @@ export default function Mint() {
               {isWhitelisted ? (
                 <>
                   <MainText heading>your name is worthy, and you have been granted passage</MainText>
-                  <MainText heading>you can acquire up to {allowed} remaining items</MainText>
+                  <MainText heading>you can acquire up to {allowed} remaining item</MainText>
                 </>
               ) : (
-                <MainText heading>you have been granted passage</MainText>
-              )}
-              {isLoading ? (
-                <MainText heading>...</MainText>
-              ) : (
                 <>
+                  <MainText heading>the initiation quest has begun</MainText>
                   <MainText heading>each item will cost you 0.01 eth</MainText>
                   <MainText heading>there are {remaining?.toString()} remaining items available</MainText>
                 </>
               )}
+              {isLoading && <MainText heading>...</MainText>}
             </Box>
             <Box className='anim-pulsate my-6'>
               <Image src={`/assets/${item}.png`} alt='item' width={80} height={80} />
@@ -134,7 +132,12 @@ export default function Mint() {
             )}
           </Box>
         ) : (
-          <MainText heading>the initiation quest will start in {timeLeft}, adventurer</MainText>
+          <Box col center>
+            <MainText heading>the initiation quest will start in {format(timeLeft)}, adventurer</MainText>
+            <Box className='anim-pulsate my-6'>
+              <Image src={`/assets/${item}.png`} alt='item' width={80} height={80} />
+            </Box>
+          </Box>
         )}
       </Box>
     </Container>
