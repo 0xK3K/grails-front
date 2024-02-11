@@ -67,11 +67,11 @@ export default function Mint() {
       const contracts = getContracts(chain)!
 
       try {
-        const approve: Call = {
+        /*const approve: Call = {
           contractAddress: contracts.eth,
           entrypoint: 'approve',
           calldata: [serializeAddress(contracts.mint), ...serializeU256(formatEther(0.01))]
-        }
+        }*/
 
         const mint: Call = {
           contractAddress: contracts.mint,
@@ -79,7 +79,7 @@ export default function Mint() {
           calldata: []
         }
 
-        return [approve, mint]
+        return [/*approve,*/ mint]
       } catch (error) {
         console.error('Failed to generate call data', error)
       }
