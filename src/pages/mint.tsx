@@ -17,17 +17,26 @@ export default function Mint() {
   const [number, setNumber] = useState(0)
 
   const isWhitelisted = useMemo(() => !!address && whitelist.includes(address), [address])
-  const mintEnabled = useMemo(() => isWhitelisted || Date.now() > 123, [isWhitelisted])
+  const mintEnabled = useMemo(() => isWhitelisted || Date.now() / 1000 > 1707696000, [isWhitelisted])
+  const timeLeft = useMemo(() => '3 hours', [])
 
-  const { data } = useContractRead({
+  const { data: allocation } = useContractRead({
     address: getContracts(chain)!.mint,
     abi: abis.mint,
     args: address ? [serializeAddress(address)] : [],
     enabled: isWhitelisted,
     functionName: 'allocation'
   })
+  const { data: balanceOf, isLoading } = useContractRead({
+    address: getContracts(chain)!.grails,
+    abi: abis.grails,
+    args: [serializeAddress(getContracts(chain)!.mint)],
+    enabled: !!address,
+    functionName: 'balanceOf'
+  })
 
-  const allocation = useMemo(() => Number(data?.toString() || 0), [data])
+  const allowed = useMemo(() => Number(allocation?.toString() || 0), [allocation])
+  const remaining = useMemo(() => (balanceOf ? ((balanceOf as bigint) / BigInt(10 ** 18)).toString() : 0), [balanceOf])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -62,7 +71,7 @@ export default function Mint() {
         const approve: Call = {
           contractAddress: contracts.eth,
           entrypoint: 'approve',
-          calldata: [serializeAddress(contracts.mint), ...serializeU256(formatEther(1))]
+          calldata: [serializeAddress(contracts.mint), ...serializeU256(formatEther(0.01))]
         }
 
         const mint: Call = {
@@ -99,26 +108,33 @@ export default function Mint() {
               {isWhitelisted ? (
                 <>
                   <MainText heading>your name is worthy, and you have been granted passage</MainText>
-                  <MainText heading>you can acquire up to {allocation} remaining items</MainText>
+                  <MainText heading>you can acquire up to {allowed} remaining items</MainText>
                 </>
               ) : (
+                <MainText heading>you have been granted passage</MainText>
+              )}
+              {isLoading ? (
+                <MainText heading>...</MainText>
+              ) : (
                 <>
-                  <MainText heading>you have been granted passage</MainText>
                   <MainText heading>each item will cost you 0.01 eth</MainText>
+                  <MainText heading>there are {remaining?.toString()} remaining items available</MainText>
                 </>
               )}
             </Box>
             <Box className='anim-pulsate my-6'>
               <Image src={`/assets/${item}.png`} alt='item' width={80} height={80} />
             </Box>
-            <Box center>
-              <Button onClick={handleCTA}>
-                <MainText heading>mint 1 item</MainText>
-              </Button>
-            </Box>
+            {Number(remaining?.toString() || 0) > 0 && (
+              <Box center>
+                <Button onClick={handleCTA}>
+                  <MainText heading>mint 1 item</MainText>
+                </Button>
+              </Box>
+            )}
           </Box>
         ) : (
-          <MainText heading>it would appear your name lacks renown for the initiation quest, adventurer</MainText>
+          <MainText heading>the initiation quest will start in {timeLeft}, adventurer</MainText>
         )}
       </Box>
     </Container>

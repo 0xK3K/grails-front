@@ -49,7 +49,7 @@ export default function Index() {
               </MainText>
             )}
             <MainText heading className='text-gray-500 transition ease-in-out hover:cursor-pointer hover:text-gray-400'>
-              <Link target='_blank' rel='noreferrer noopener' href='https://t.me/grails404'>
+              <Link target='_blank' rel='noreferrer noopener' href='https://t.me/Grails_404'>
                 JOIN US ON TELEGRAM
               </Link>
             </MainText>
