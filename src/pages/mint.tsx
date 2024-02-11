@@ -17,15 +17,11 @@ export default function Mint() {
 
   const [number, setNumber] = useState(0)
 
-  const isWhitelisted = useMemo(() => !!address && whitelist.includes(address), [address])
-  const mintEnabled = useMemo(() => isWhitelisted || Date.now() / 1000 > 1707706800, [isWhitelisted])
-  const timeLeft = useMemo(() => 1707706800000, [])
-
   const { data: allocation } = useContractRead({
     address: getContracts(chain)!.mint,
     abi: abis.mint,
     args: address ? [serializeAddress(address)] : [],
-    enabled: isWhitelisted,
+    enabled: !!address,
     functionName: 'allocation'
   })
   const { data: balanceOf, isLoading } = useContractRead({
@@ -37,6 +33,8 @@ export default function Mint() {
   })
 
   const allowed = useMemo(() => Number(allocation?.toString() || 0), [allocation])
+  const mintEnabled = useMemo(() => allowed || Date.now() / 1000 > 1707706800, [allowed])
+  const timeLeft = useMemo(() => 1707706800000, [])
   const remaining = useMemo(() => (balanceOf ? ((balanceOf as bigint) / BigInt(10 ** 18)).toString() : 0), [balanceOf])
 
   useEffect(() => {
@@ -106,7 +104,7 @@ export default function Mint() {
         ) : mintEnabled ? (
           <Box col center>
             <Box col center>
-              {isWhitelisted ? (
+              {allowed ? (
                 <>
                   <MainText heading>your name is worthy, and you have been granted passage</MainText>
                   <MainText heading>you can acquire up to {allowed} remaining item</MainText>
