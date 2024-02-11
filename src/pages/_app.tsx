@@ -1,10 +1,13 @@
 import Header from '@/components/Header'
+import { PendingTransactionsProvider } from '@/contexts/PendingTransactions'
 import type { AppProps } from 'next/app'
 import React, { useState } from 'react'
 import Head from 'next/head'
+import { Provider as ReduxProvider } from 'react-redux'
 import { NextUIProvider } from '@nextui-org/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import StarknetConfigWrapper from '@/components/StarknetConfigWrapper'
+import { store } from '@/store'
 import { ToastContainer } from 'react-toastify'
 import '@/styles/globals.css'
 import 'react-toastify/dist/ReactToastify.css'
@@ -36,18 +39,22 @@ export default function App({ Component, pageProps }: AppProps) {
       <main className='text-foreground dark'>
         <NextUIProvider>
           <QueryClientProvider client={queryClient}>
-            <StarknetConfigWrapper>
-              <ToastContainer
-                position='bottom-right'
-                autoClose={3000}
-                newestOnTop
-                pauseOnFocusLoss
-                draggable={false}
-                pauseOnHover={false}
-              />
-              <Header />
-              <Component {...pageProps} />
-            </StarknetConfigWrapper>
+            <ReduxProvider store={store}>
+              <StarknetConfigWrapper>
+                <ToastContainer
+                  position='bottom-right'
+                  autoClose={3000}
+                  newestOnTop
+                  pauseOnFocusLoss
+                  draggable={false}
+                  pauseOnHover={false}
+                />
+                <Header />
+                <PendingTransactionsProvider>
+                  <Component {...pageProps} />
+                </PendingTransactionsProvider>
+              </StarknetConfigWrapper>
+            </ReduxProvider>
           </QueryClientProvider>
         </NextUIProvider>
       </main>

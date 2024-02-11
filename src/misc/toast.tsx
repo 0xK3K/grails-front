@@ -8,9 +8,9 @@ import { Box, MainText } from '@/components/Layout'
 const toastContent = (transactionType: TransactionType, type: 'info' | 'success' | 'error') =>
   ({
     [TransactionType.Mint]: {
-      error: 'Error minting',
-      info: 'Minting...',
-      success: 'Mint successful!'
+      error: 'error minting',
+      info: 'minting...',
+      success: 'mint successful!'
     }
   })[transactionType][type]
 
@@ -24,16 +24,16 @@ interface ToastProps {
 export const toast = ({ action, chain, transactionHash, type = 'info' }: ToastProps) => {
   toastify[type](
     <Box col className='ml-4 items-start'>
-      <MainText heading className='text-lg text-white'>
-        {toastContent(action, type).toUpperCase()}
+      <MainText heading className='text-white'>
+        {toastContent(action, type)}
       </MainText>
       {transactionHash && (
         <Link href={explorerTransactionURL(transactionHash, chain)} target='_blank' rel='noopener noreferrer'>
-          <MainText className='text-sm'>
-            Transaction hash:{' '}
-            <MainText heading className='text-blue-600 underline'>
-              {shortenTxHash(transactionHash)}
-            </MainText>
+          <MainText heading className='text-sm'>
+            tx hash:{' '}
+          </MainText>
+          <MainText heading className='text-blue-600 underline'>
+            {shortenTxHash(transactionHash)}
           </MainText>
         </Link>
       )}

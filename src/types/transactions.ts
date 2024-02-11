@@ -2,12 +2,7 @@ export enum TransactionType {
   Mint = 'MINT'
 }
 
-export interface Mint {
+export type Transaction = {
   action: TransactionType.Mint
-  strategyName: string
-}
-
-export type Transaction = Mint & {
   hash: string
-  timestamp: number
 }

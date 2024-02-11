@@ -1,5 +1,7 @@
-import { MainText } from '@/components/Layout'
+import { Box, MainText } from '@/components/Layout'
+import { useAppSelector } from '@/hooks'
 import { shortenAddress } from '@/misc'
+import { selectPendingTransactions } from '@/store/appSlice'
 import {
   Button,
   Dropdown,
@@ -8,7 +10,8 @@ import {
   DropdownTrigger,
   Navbar,
   NavbarBrand,
-  NavbarContent
+  NavbarContent,
+  Spinner
 } from '@nextui-org/react'
 import WalletModal from '@/components/WalletModal'
 import { useAccount, useDisconnect } from '@starknet-react/core'
@@ -18,6 +21,7 @@ import Link from 'next/link'
 export default function Header() {
   const { address } = useAccount()
   const { disconnect } = useDisconnect()
+  const pendingTransactions = useAppSelector(selectPendingTransactions)
 
   return (
     <Navbar className='bg-main/20 z-50 mb-10' maxWidth='2xl'>
@@ -27,6 +31,14 @@ export default function Header() {
         </Link>
       </NavbarBrand>
       <NavbarContent justify='end'>
+        {!!pendingTransactions.length && (
+          <Box center className='relative'>
+            <MainText heading className='absolute text-sm'>
+              {pendingTransactions.length}
+            </MainText>
+            <Spinner color='white' size='sm' />
+          </Box>
+        )}
         {address ? (
           <Dropdown type='menu' classNames={{ content: 'p-0 bg-transparent' }} placement='bottom-end'>
             <DropdownTrigger>

@@ -1,7 +1,7 @@
 import { Box, Container, MainText } from '@/components/Layout'
 import { useAccount } from '@starknet-react/core'
 
-export default function Index() {
+export default function Items() {
   const { isConnected } = useAccount()
 
   return (
