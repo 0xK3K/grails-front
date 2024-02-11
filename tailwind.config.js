@@ -8,6 +8,20 @@ module.exports = {
       dropShadow: {
         lp: '0 0 20px rgb(38, 63, 169)',
         range: '0 0 20px rgb(80, 56, 126)'
+      },
+      keyframes: {
+        boxBounce: {
+          '0%, 100%': { transform: 'translateY(-5%)', animationTimingFunction: 'ease-in-out' },
+          '50%': { transform: 'translateY(0)', animationTimingFunction: 'ease-in-out' }
+        },
+        boxPulse: {
+          '0%, 100%': { opacity: 0.25 },
+          '40%, 50%, 60%': { opacity: 1 }
+        },
+        boxScale: {
+          '0%, 100%': { transform: 'scale(0.95)' },
+          '50%': { transform: 'scale(1.05)' }
+        }
       }
     },
     fontFamily: {

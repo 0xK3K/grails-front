@@ -56,6 +56,16 @@ export const grails = [
     ]
   },
   {
+    name: 'core::array::Span::<core::felt252>',
+    type: 'struct',
+    members: [
+      {
+        name: 'snapshot',
+        type: '@core::array::Array::<core::felt252>'
+      }
+    ]
+  },
+  {
     name: 'grails::grails::IGrails',
     type: 'interface',
     items: [
@@ -154,11 +164,76 @@ export const grails = [
         state_mutability: 'view'
       },
       {
+        name: 'erc20BalanceOf',
+        type: 'function',
+        inputs: [
+          {
+            name: 'account',
+            type: 'core::starknet::contract_address::ContractAddress'
+          }
+        ],
+        outputs: [
+          {
+            type: 'core::integer::u256'
+          }
+        ],
+        state_mutability: 'view'
+      },
+      {
+        name: 'erc20TotalSupply',
+        type: 'function',
+        inputs: [],
+        outputs: [
+          {
+            type: 'core::integer::u256'
+          }
+        ],
+        state_mutability: 'view'
+      },
+      {
+        name: 'erc721TokensBankedInQueue',
+        type: 'function',
+        inputs: [],
+        outputs: [
+          {
+            type: 'core::integer::u256'
+          }
+        ],
+        state_mutability: 'view'
+      },
+      {
+        name: 'erc721BalanceOf',
+        type: 'function',
+        inputs: [
+          {
+            name: 'account',
+            type: 'core::starknet::contract_address::ContractAddress'
+          }
+        ],
+        outputs: [
+          {
+            type: 'core::integer::u256'
+          }
+        ],
+        state_mutability: 'view'
+      },
+      {
+        name: 'erc721TotalSupply',
+        type: 'function',
+        inputs: [],
+        outputs: [
+          {
+            type: 'core::integer::u256'
+          }
+        ],
+        state_mutability: 'view'
+      },
+      {
         name: 'getApproved',
         type: 'function',
         inputs: [
           {
-            name: 'amount',
+            name: 'tokenId',
             type: 'core::integer::u256'
           }
         ],
@@ -178,35 +253,13 @@ export const grails = [
             type: 'core::starknet::contract_address::ContractAddress'
           },
           {
-            name: 'spender',
+            name: 'operator',
             type: 'core::starknet::contract_address::ContractAddress'
           }
         ],
         outputs: [
           {
             type: 'core::bool'
-          }
-        ],
-        state_mutability: 'view'
-      },
-      {
-        name: 'minted',
-        type: 'function',
-        inputs: [],
-        outputs: [
-          {
-            type: 'core::integer::u256'
-          }
-        ],
-        state_mutability: 'view'
-      },
-      {
-        name: 'name',
-        type: 'function',
-        inputs: [],
-        outputs: [
-          {
-            type: 'core::felt252'
           }
         ],
         state_mutability: 'view'
@@ -242,6 +295,65 @@ export const grails = [
           }
         ],
         state_mutability: 'view'
+      },
+      {
+        name: 'name',
+        type: 'function',
+        inputs: [],
+        outputs: [
+          {
+            type: 'core::felt252'
+          }
+        ],
+        state_mutability: 'view'
+      },
+      {
+        name: 'safe_transfer_from',
+        type: 'function',
+        inputs: [
+          {
+            name: 'from',
+            type: 'core::starknet::contract_address::ContractAddress'
+          },
+          {
+            name: 'to',
+            type: 'core::starknet::contract_address::ContractAddress'
+          },
+          {
+            name: 'amount_or_id',
+            type: 'core::integer::u256'
+          },
+          {
+            name: 'data',
+            type: 'core::array::Span::<core::felt252>'
+          }
+        ],
+        outputs: [],
+        state_mutability: 'external'
+      },
+      {
+        name: 'safeTransferFrom',
+        type: 'function',
+        inputs: [
+          {
+            name: 'from',
+            type: 'core::starknet::contract_address::ContractAddress'
+          },
+          {
+            name: 'to',
+            type: 'core::starknet::contract_address::ContractAddress'
+          },
+          {
+            name: 'amountOrId',
+            type: 'core::integer::u256'
+          },
+          {
+            name: 'data',
+            type: 'core::array::Span::<core::felt252>'
+          }
+        ],
+        outputs: [],
+        state_mutability: 'external'
       },
       {
         name: 'setApprovalForAll',
@@ -311,11 +423,27 @@ export const grails = [
         state_mutability: 'view'
       },
       {
+        name: 'token_uri',
+        type: 'function',
+        inputs: [
+          {
+            name: 'token_id',
+            type: 'core::integer::u256'
+          }
+        ],
+        outputs: [
+          {
+            type: 'core::felt252'
+          }
+        ],
+        state_mutability: 'view'
+      },
+      {
         name: 'tokenURI',
         type: 'function',
         inputs: [
           {
-            name: 'id',
+            name: 'tokenId',
             type: 'core::integer::u256'
           }
         ],
@@ -381,11 +509,15 @@ export const grails = [
             type: 'core::starknet::contract_address::ContractAddress'
           },
           {
-            name: 'amountOrId',
+            name: 'amount_or_id',
             type: 'core::integer::u256'
           }
         ],
-        outputs: [],
+        outputs: [
+          {
+            type: 'core::bool'
+          }
+        ],
         state_mutability: 'external'
       },
       {
@@ -405,8 +537,23 @@ export const grails = [
             type: 'core::integer::u256'
           }
         ],
-        outputs: [],
+        outputs: [
+          {
+            type: 'core::bool'
+          }
+        ],
         state_mutability: 'external'
+      },
+      {
+        name: 'units',
+        type: 'function',
+        inputs: [],
+        outputs: [
+          {
+            type: 'core::integer::u256'
+          }
+        ],
+        state_mutability: 'view'
       },
       {
         name: 'whitelist',
@@ -491,28 +638,6 @@ export const grails = [
   },
   {
     kind: 'struct',
-    name: 'grails::grails::Grails::Approval',
-    type: 'event',
-    members: [
-      {
-        kind: 'key',
-        name: 'owner',
-        type: 'core::starknet::contract_address::ContractAddress'
-      },
-      {
-        kind: 'key',
-        name: 'spender',
-        type: 'core::starknet::contract_address::ContractAddress'
-      },
-      {
-        kind: 'data',
-        name: 'amount',
-        type: 'core::integer::u256'
-      }
-    ]
-  },
-  {
-    kind: 'struct',
     name: 'grails::grails::Grails::ApprovalForAll',
     type: 'event',
     members: [
@@ -530,6 +655,28 @@ export const grails = [
         kind: 'data',
         name: 'approved',
         type: 'core::bool'
+      }
+    ]
+  },
+  {
+    kind: 'struct',
+    name: 'grails::grails::Grails::ERC20Approval',
+    type: 'event',
+    members: [
+      {
+        kind: 'key',
+        name: 'owner',
+        type: 'core::starknet::contract_address::ContractAddress'
+      },
+      {
+        kind: 'key',
+        name: 'spender',
+        type: 'core::starknet::contract_address::ContractAddress'
+      },
+      {
+        kind: 'data',
+        name: 'amount',
+        type: 'core::integer::u256'
       }
     ]
   },
@@ -579,7 +726,7 @@ export const grails = [
   },
   {
     kind: 'struct',
-    name: 'grails::grails::Grails::Transfer',
+    name: 'grails::grails::Grails::ERC721Transfer',
     type: 'event',
     members: [
       {
@@ -681,13 +828,13 @@ export const grails = [
     variants: [
       {
         kind: 'nested',
-        name: 'Approval',
-        type: 'grails::grails::Grails::Approval'
+        name: 'ApprovalForAll',
+        type: 'grails::grails::Grails::ApprovalForAll'
       },
       {
         kind: 'nested',
-        name: 'ApprovalForAll',
-        type: 'grails::grails::Grails::ApprovalForAll'
+        name: 'ERC20Approval',
+        type: 'grails::grails::Grails::ERC20Approval'
       },
       {
         kind: 'nested',
@@ -701,8 +848,8 @@ export const grails = [
       },
       {
         kind: 'nested',
-        name: 'Transfer',
-        type: 'grails::grails::Grails::Transfer'
+        name: 'ERC721Transfer',
+        type: 'grails::grails::Grails::ERC721Transfer'
       },
       {
         kind: 'flat',

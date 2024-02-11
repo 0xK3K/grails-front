@@ -57,8 +57,8 @@ export default function Header() {
               }}
             >
               <DropdownItem variant='bordered' className='border-none text-end'>
-                <Link href='/items'>
-                  <MainText heading>ITEMS</MainText>
+                <Link href='/backpack'>
+                  <MainText heading>BACKPACK</MainText>
                 </Link>
               </DropdownItem>
               <DropdownItem variant='bordered' className='border-none text-end'>
