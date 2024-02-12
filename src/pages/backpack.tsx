@@ -22,7 +22,7 @@ export default function Backpack() {
     () =>
       ids.map((id) => ({
         id,
-        type: metadata[id].type
+        type: metadata[id - 1].type
       })),
     [ids]
   )
