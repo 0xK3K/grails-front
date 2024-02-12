@@ -29,10 +29,10 @@ export default function Index() {
           </Box>
           <MainText heading>
             a collection of 10,000 items on starknet
-            <div className='my-4'>collect. trade. build. find grails.</div>
+            <div className='my-2'>collect. trade. build. find grails.</div>
             powered by the erc404 standard
           </MainText>
-          <Box center className='mt-4'>
+          <Box center className='mt-6'>
             <MainText heading className='text-gray-500 transition ease-in-out hover:cursor-pointer hover:text-gray-400'>
               <Link target='_blank' rel='noreferrer noopener' href='https://x.com/grails_erc404'>
                 FOLLOW GRAILS ON X
