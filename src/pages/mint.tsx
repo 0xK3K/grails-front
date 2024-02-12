@@ -42,7 +42,9 @@ export default function Mint() {
           <Box col center>
             <Box col center>
               <MainText heading>the initiation quest has completed</MainText>
-              <MainText heading>each item now in the hands of an adventurer</MainText>
+              <MainText heading className='my-3'>
+                each item now in the hands of an adventurer
+              </MainText>
               <MainText heading>the realm awaits them on their next quest</MainText>
             </Box>
             <Box className='anim-pulsate my-6'>
