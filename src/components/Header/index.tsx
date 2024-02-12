@@ -27,7 +27,7 @@ export default function Header() {
     <Navbar className='bg-main/20 z-50 mb-10' maxWidth='2xl'>
       <NavbarBrand>
         <Link href='/'>
-          <Image src='/assets/item.png' width={40} height={40} alt='' />
+          <Image src='/assets/grail.png' width={40} height={40} alt='' />
         </Link>
       </NavbarBrand>
       <NavbarContent justify='end'>
