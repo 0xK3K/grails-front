@@ -67,6 +67,24 @@ export default function Header() {
                 </Link>
               </DropdownItem>
               <DropdownItem variant='bordered' className='border-none text-end'>
+                <Link
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  href='https://www.geckoterminal.com/starknet-alpha/pools/0x3bbd6db25627a19166df3317311327f5911f5a39069c340eb8b926cec3b60e4'
+                >
+                  <MainText heading>CHART</MainText>
+                </Link>
+              </DropdownItem>
+              <DropdownItem variant='bordered' className='border-none text-end'>
+                <Link
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  href='https://app.avnu.fi/en?amount=1&tokenFrom=0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7&tokenTo=0x02a819b93cc69b45ee5d1a1bfc16954c16f6d35c3873a06c97b95c009bfe502b'
+                >
+                  <MainText heading>BUY</MainText>
+                </Link>
+              </DropdownItem>
+              <DropdownItem variant='bordered' className='border-none text-end'>
                 <div onClick={() => disconnect()}>
                   <MainText heading>DISCONNECT</MainText>
                 </div>
