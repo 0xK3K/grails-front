@@ -100,7 +100,7 @@ export default function Mint() {
                 <MainText heading>...</MainText>
               ) : (
                 <MainText heading className='mt-6'>
-                  there are 950 remaining items available
+                  there are {remaining?.toString()} remaining items available
                 </MainText>
               )}
             </Box>
