@@ -71,7 +71,7 @@ export default function Header() {
                   target='_blank'
                   rel='noopener noreferrer'
                   className='block w-full'
-                  href='https://www.geckoterminal.com/starknet-alpha/pools/0x3bbd6db25627a19166df3317311327f5911f5a39069c340eb8b926cec3b60e4'
+                  href='https://www.geckoterminal.com/starknet-alpha/pools/0x2ac952e8e5324e77b65ff7f91558ac270ba535f3d394ccd2175dc6530b8f110'
                 >
                   <MainText heading>CHART</MainText>
                 </Link>
