@@ -7,10 +7,15 @@ import { Box, MainText } from '@/components/Layout'
 
 const toastContent = (transactionType: TransactionType, type: 'info' | 'success' | 'error') =>
   ({
-    [TransactionType.Mint]: {
-      error: 'error minting',
-      info: 'minting...',
-      success: 'mint successful!'
+    [TransactionType.Retrieve]: {
+      error: 'error retrieving',
+      info: 'retrieving...',
+      success: 'retrieve successful!'
+    },
+    [TransactionType.Store]: {
+      error: 'error storing',
+      info: 'storing...',
+      success: 'store successful!'
     }
   })[transactionType][type]
 

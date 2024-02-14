@@ -11,8 +11,8 @@ module.exports = {
       },
       keyframes: {
         boxBounce: {
-          '0%, 100%': { transform: 'translateY(-10%)', animationTimingFunction: 'ease-in-out' },
-          '50%': { transform: 'translateY(0)', animationTimingFunction: 'ease-in-out' }
+          '0%, 100%': { transform: 'translateY(-4%)', animationTimingFunction: 'ease-in-out' },
+          '50%': { transform: 'translateY(6%)', animationTimingFunction: 'ease-in-out' }
         },
         boxPulse: {
           '0%, 100%': { opacity: 0.25 },

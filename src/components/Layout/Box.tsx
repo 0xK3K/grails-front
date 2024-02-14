@@ -5,11 +5,12 @@ export type BoxProps = {
   children: React.ReactNode
   className?: string
   col?: boolean
+  onClick?(): void
   spaced?: boolean
 }
 
 export const Box = forwardRef(
-  ({ children, center, col, className = '', spaced }: BoxProps, ref: ForwardedRef<HTMLDivElement | null>) => {
+  ({ children, center, col, className = '', onClick, spaced }: BoxProps, ref: ForwardedRef<HTMLDivElement | null>) => {
     let style = 'flex'
     if (col) {
       style += ' flex-col'
@@ -22,7 +23,7 @@ export const Box = forwardRef(
     }
 
     return (
-      <div ref={ref} className={style + ' ' + className}>
+      <div onClick={onClick} ref={ref} className={style + ' ' + className}>
         {children}
       </div>
     )

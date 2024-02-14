@@ -24,13 +24,21 @@ export default function Header() {
   const pendingTransactions = useAppSelector(selectPendingTransactions)
 
   return (
-    <Navbar className='bg-main/20 z-50 mb-10' maxWidth='2xl'>
-      <NavbarBrand>
+    <Navbar className='z-50 mb-10 bg-transparent' maxWidth='2xl'>
+      <NavbarBrand className='w-[20%]'>
         <Link href='/'>
           <Image src='/assets/grail.png' width={40} height={40} alt='' />
         </Link>
       </NavbarBrand>
-      <NavbarContent justify='end'>
+      <NavbarContent justify='center'>
+        <Link href='/backpack' className='mx-4 flex'>
+          <MainText heading>BACKPACK</MainText>
+        </Link>
+        <Link href='/vault' className='mx-4 flex'>
+          <MainText heading>VAULT</MainText>
+        </Link>
+      </NavbarContent>
+      <NavbarContent justify='end' className='w-[20%]'>
         {!!pendingTransactions.length && (
           <Box center className='relative'>
             <MainText heading className='absolute text-sm'>
@@ -56,11 +64,6 @@ export default function Header() {
                 base: ['text-gray-500', 'transition-opacity', 'data-[hover=true]:text-gray-400']
               }}
             >
-              <DropdownItem variant='bordered' className='border-none text-end'>
-                <Link href='/backpack'>
-                  <MainText heading>BACKPACK</MainText>
-                </Link>
-              </DropdownItem>
               <DropdownItem variant='bordered' className='border-none text-end'>
                 <Link href='/mint' className='block w-full'>
                   <MainText heading>MINT</MainText>

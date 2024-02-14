@@ -17,7 +17,6 @@ const PendingTransaction = ({ pendingTransaction }: { pendingTransaction: Transa
 
   useEffect(() => {
     if (data) {
-      console.log(data)
       if ((data as { finality_status: TransactionStatus }).finality_status === TransactionStatus.ACCEPTED_ON_L2) {
         toast({
           action: pendingTransaction.action,

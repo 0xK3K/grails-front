@@ -1,6 +1,6 @@
 import { Box, CheckIcon, Container, MainText } from '@/components/Layout'
 import { useDispatch } from '@/hooks'
-import { abis, getContracts, metadata, serializeAddress, serializeBoolean, serializeU256, toast } from '@/misc'
+import { abis, getContracts, metadata, serializeAddress, serializeU256, toast } from '@/misc'
 import { addPendingTransaction } from '@/store/appSlice'
 import { TransactionType } from '@/types'
 import { Button, Spinner } from '@nextui-org/react'
@@ -9,30 +9,22 @@ import Image from 'next/image'
 import { useCallback, useMemo, useState } from 'react'
 import { Call, num } from 'starknet'
 
-export default function Backpack() {
+export default function Vault() {
   const { address, isConnected } = useAccount()
   const { chain } = useNetwork()
   const dispatch = useDispatch()
 
-  const [idsToStore, setIdsToStore] = useState<Set<number>>(new Set())
+  const [idsToRetrieve, setIdsToRetrieve] = useState<Set<number>>(new Set())
 
-  const { data: isApprovedForAll } = useContractRead({
-    address: getContracts(chain)!.grails,
-    abi: abis.grails,
-    args: [serializeAddress(getContracts(chain)!.vault)],
-    enabled: !!address,
-    functionName: 'isApprovedForAll'
-  })
-
-  const { data: owned, isLoading } = useContractRead({
-    address: getContracts(chain)!.grails,
-    abi: abis.grails,
+  const { data: stored, isLoading } = useContractRead({
+    address: getContracts(chain)!.vault,
+    abi: abis.vault,
     args: address ? [serializeAddress(address)] : [],
     enabled: !!address,
-    functionName: 'owned'
+    functionName: 'stored'
   })
 
-  const ids = useMemo(() => (owned as Array<bigint>)?.map((id) => Number(id.toString())) || [], [owned])
+  const ids = useMemo(() => (stored as Array<bigint>)?.map((id) => Number(id.toString())) || [], [stored])
   const items = useMemo(
     () =>
       ids.map((id) => ({
@@ -41,7 +33,7 @@ export default function Backpack() {
       })),
     [ids]
   )
-  const amountToStore = useMemo(() => [...idsToStore].length, [idsToStore])
+  const amountToRetrieve = useMemo(() => [...idsToRetrieve].length, [idsToRetrieve])
 
   const animation = useCallback((type: string) => {
     switch (type) {
@@ -59,34 +51,26 @@ export default function Backpack() {
       const contracts = getContracts(chain)!
 
       try {
-        const setApprovalForAll: Call | null = !isApprovedForAll
-          ? {
-              contractAddress: contracts.grails,
-              entrypoint: 'setApprovalForAll',
-              calldata: [serializeAddress(contracts.vault), ...serializeBoolean(true)]
-            }
-          : null
-
-        const store: Array<Call> = [...idsToStore].map((id) => ({
+        const retrieve: Array<Call> = [...idsToRetrieve].map((id) => ({
           contractAddress: contracts.vault,
-          entrypoint: 'store',
+          entrypoint: 'retrieve',
           calldata: [...serializeU256(id.toString())]
         }))
 
-        return [setApprovalForAll, ...store].filter((x): x is Call => x !== null)
+        return [...retrieve]
       } catch (error) {
         console.error('Failed to generate call data', error)
       }
     }
-  }, [address, chain, idsToStore, isApprovedForAll])
+  }, [address, chain, idsToRetrieve])
 
   const { writeAsync } = useContractWrite({ calls })
 
   const handleCTA = useCallback(async () => {
     try {
       const { transaction_hash: hash } = await writeAsync()
-      toast({ action: TransactionType.Store, chain, transactionHash: hash, type: 'info' })
-      dispatch(addPendingTransaction({ action: TransactionType.Store, hash: num.toStorageKey(hash) }))
+      toast({ action: TransactionType.Retrieve, chain, transactionHash: hash, type: 'info' })
+      dispatch(addPendingTransaction({ action: TransactionType.Retrieve, hash: num.toStorageKey(hash) }))
     } catch (e) {}
   }, [chain, dispatch, writeAsync])
 
@@ -94,26 +78,31 @@ export default function Backpack() {
     <Container className='h-[100%] max-w-[1400px]'>
       <Box center className='my-20'>
         <MainText heading className='text-3xl'>
-          backpack
+          vault
         </MainText>
       </Box>
       <Box center>
         {!isConnected ? (
-          <MainText heading>welcome, adventurer, connect your wallet to see the content of your backpack</MainText>
+          <MainText heading>welcome, adventurer, connect your wallet to see the content of your vault</MainText>
         ) : isLoading ? (
           <Spinner color='white' className='mt-12' />
         ) : !ids.length ? (
-          <MainText heading>your inventory is empty...</MainText>
+          <Box col center>
+            <MainText heading className='mb-3'>
+              your vault is empty
+            </MainText>
+            <MainText heading>add items to your vault from the backpack</MainText>
+          </Box>
         ) : (
           <Box col center>
             <Box center className={`mx-auto max-w-[1200px] flex-wrap`}>
               {items.map(({ id, type }, index) => (
                 <Box
                   onClick={() => {
-                    if (idsToStore.has(id)) {
-                      setIdsToStore((state) => new Set([...state].filter((item) => item !== id)))
+                    if (idsToRetrieve.has(id)) {
+                      setIdsToRetrieve((state) => new Set([...state].filter((item) => item !== id)))
                     } else {
-                      setIdsToStore((state) => new Set([...state, id]))
+                      setIdsToRetrieve((state) => new Set([...state, id]))
                     }
                   }}
                   key={index}
@@ -136,15 +125,15 @@ export default function Backpack() {
                   )}
                   <Box center>
                     <MainText heading>ID: {id}</MainText>
-                    {idsToStore.has(id) && <CheckIcon className='ml-2 size-5' />}
+                    {idsToRetrieve.has(id) && <CheckIcon className='ml-2 size-5' />}
                   </Box>
                 </Box>
               ))}
             </Box>
-            {!!amountToStore && (
+            {!!amountToRetrieve && (
               <Button onClick={handleCTA} className='mt-6'>
                 <MainText heading>
-                  STORE {amountToStore} ITEM{amountToStore > 1 ? 'S' : ''}
+                  RETRIEVE {amountToRetrieve} ITEM{amountToRetrieve > 1 ? 'S' : ''}
                 </MainText>
               </Button>
             )}

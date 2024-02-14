@@ -1,8 +1,9 @@
 export enum TransactionType {
-  Mint = 'MINT'
+  Retrieve = 'RETRIEVE',
+  Store = 'STORE'
 }
 
 export type Transaction = {
-  action: TransactionType.Mint
+  action: TransactionType
   hash: string
 }

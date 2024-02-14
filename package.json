@@ -31,6 +31,7 @@
     "dotenv": "^16.3.1",
     "framer-motion": "11.0.3",
     "next": "^14.0.4",
+    "pixelarticons": "^1.7.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-redux": "^9.1.0",

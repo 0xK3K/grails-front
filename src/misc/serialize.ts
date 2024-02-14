@@ -4,6 +4,10 @@ const MAX_U128 = 2n ** 128n - 1n
 
 export const serializeAddress = (address: string) => num.getDecimalString(address)
 
+export function serializeBoolean(x: boolean): [string] {
+  return [x ? '0x1' : '0x0']
+}
+
 export const serializeU128 = (n: string): string => {
   if (BigInt(n) < 0n) throw new Error('negative serialize')
   if (BigInt(n) > MAX_U128) throw new Error('max u128 serialize')

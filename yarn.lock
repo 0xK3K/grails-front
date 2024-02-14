@@ -5431,6 +5431,11 @@ pirates@^4.0.1:
   resolved "https://registry.yarnpkg.com/pirates/-/pirates-4.0.6.tgz#3018ae32ecfcff6c29ba2267cbf21166ac1f36b9"
   integrity sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==
 
+pixelarticons@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/pixelarticons/-/pixelarticons-1.7.0.tgz#615197ed1f43a652a9bf671058f698fefde81e00"
+  integrity sha512-O+r485MR79mYxhGoSOdGzOix8S2evAhswvSFcvOReHZ2YGbvezWuFrqk/91fsjVnTXU6rEtdcklPNOVbZiorSQ==
+
 pkg-types@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/pkg-types/-/pkg-types-1.0.3.tgz#988b42ab19254c01614d13f4f65a2cfc7880f868"

@@ -1,4 +1,4 @@
-export const mint = [
+export const vault = [
   {
     name: 'UpgradeableImpl',
     type: 'impl',
@@ -23,9 +23,9 @@ export const mint = [
     ]
   },
   {
-    name: 'Mint',
+    name: 'Vault',
     type: 'impl',
-    interface_name: 'grails::mint::IMint'
+    interface_name: 'grails::vault::IVault'
   },
   {
     name: 'core::integer::u256',
@@ -42,25 +42,51 @@ export const mint = [
     ]
   },
   {
-    name: 'core::bool',
-    type: 'enum',
-    variants: [
-      {
-        name: 'False',
-        type: '()'
-      },
-      {
-        name: 'True',
-        type: '()'
-      }
-    ]
-  },
-  {
-    name: 'grails::mint::IMint',
+    name: 'grails::vault::IVault',
     type: 'interface',
     items: [
       {
-        name: 'allocation',
+        name: 'ownerOf',
+        type: 'function',
+        inputs: [
+          {
+            name: 'id',
+            type: 'core::integer::u256'
+          }
+        ],
+        outputs: [
+          {
+            type: 'core::starknet::contract_address::ContractAddress'
+          }
+        ],
+        state_mutability: 'view'
+      },
+      {
+        name: 'retrieve',
+        type: 'function',
+        inputs: [
+          {
+            name: 'id',
+            type: 'core::integer::u256'
+          }
+        ],
+        outputs: [],
+        state_mutability: 'external'
+      },
+      {
+        name: 'store',
+        type: 'function',
+        inputs: [
+          {
+            name: 'id',
+            type: 'core::integer::u256'
+          }
+        ],
+        outputs: [],
+        state_mutability: 'external'
+      },
+      {
+        name: 'stored',
         type: 'function',
         inputs: [
           {
@@ -70,41 +96,7 @@ export const mint = [
         ],
         outputs: [
           {
-            type: 'core::integer::u256'
-          }
-        ],
-        state_mutability: 'view'
-      },
-      {
-        name: 'collect',
-        type: 'function',
-        inputs: [],
-        outputs: [],
-        state_mutability: 'external'
-      },
-      {
-        name: 'mint',
-        type: 'function',
-        inputs: [
-          {
-            name: 'amount',
-            type: 'core::integer::u256'
-          }
-        ],
-        outputs: [
-          {
-            type: 'core::bool'
-          }
-        ],
-        state_mutability: 'external'
-      },
-      {
-        name: 'unitPrice',
-        type: 'function',
-        inputs: [],
-        outputs: [
-          {
-            type: 'core::integer::u256'
+            type: 'core::array::Array::<core::integer::u256>'
           }
         ],
         state_mutability: 'view'
@@ -163,6 +155,40 @@ export const mint = [
       {
         name: 'owner',
         type: 'core::starknet::contract_address::ContractAddress'
+      }
+    ]
+  },
+  {
+    kind: 'struct',
+    name: 'grails::vault::Vault::Retrieve',
+    type: 'event',
+    members: [
+      {
+        kind: 'key',
+        name: 'owner',
+        type: 'core::starknet::contract_address::ContractAddress'
+      },
+      {
+        kind: 'key',
+        name: 'id',
+        type: 'core::integer::u256'
+      }
+    ]
+  },
+  {
+    kind: 'struct',
+    name: 'grails::vault::Vault::Store',
+    type: 'event',
+    members: [
+      {
+        kind: 'key',
+        name: 'owner',
+        type: 'core::starknet::contract_address::ContractAddress'
+      },
+      {
+        kind: 'key',
+        name: 'id',
+        type: 'core::integer::u256'
       }
     ]
   },
@@ -243,9 +269,19 @@ export const mint = [
   },
   {
     kind: 'enum',
-    name: 'grails::mint::Mint::Event',
+    name: 'grails::vault::Vault::Event',
     type: 'event',
     variants: [
+      {
+        kind: 'nested',
+        name: 'Retrieve',
+        type: 'grails::vault::Vault::Retrieve'
+      },
+      {
+        kind: 'nested',
+        name: 'Store',
+        type: 'grails::vault::Vault::Store'
+      },
       {
         kind: 'flat',
         name: 'OwnableEvent',
