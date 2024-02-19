@@ -25,14 +25,14 @@ export default function Vault() {
   })
 
   const ids = useMemo(() => (stored as Array<bigint>)?.map((id) => Number(id.toString())) || [], [stored])
-  const items = useMemo(
-    () =>
-      ids.map((id) => ({
-        id,
-        type: metadata[id - 1].type
-      })),
-    [ids]
-  )
+  const items = useMemo(() => {
+    const items = ids.map((id) => ({
+      id,
+      type: metadata[id - 1].type
+    }))
+    items.sort(({ id: a }, { id: b }) => a - b)
+    return items
+  }, [ids])
   const amountToRetrieve = useMemo(() => [...idsToRetrieve].length, [idsToRetrieve])
 
   const animation = useCallback((type: string) => {

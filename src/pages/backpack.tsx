@@ -33,14 +33,14 @@ export default function Backpack() {
   })
 
   const ids = useMemo(() => (owned as Array<bigint>)?.map((id) => Number(id.toString())) || [], [owned])
-  const items = useMemo(
-    () =>
-      ids.map((id) => ({
-        id,
-        type: metadata[id - 1].type
-      })),
-    [ids]
-  )
+  const items = useMemo(() => {
+    const items = ids.map((id) => ({
+      id,
+      type: metadata[id - 1].type
+    }))
+    items.sort(({ id: a }, { id: b }) => a - b)
+    return items
+  }, [ids])
   const amountToStore = useMemo(() => [...idsToStore].length, [idsToStore])
 
   const animation = useCallback((type: string) => {
