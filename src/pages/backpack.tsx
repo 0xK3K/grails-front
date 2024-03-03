@@ -127,7 +127,7 @@ export default function Backpack() {
                     className='relative mx-5 my-3 cursor-pointer'
                   >
                     <Image
-                        src={image.replace(/^ipfs:\/\/(.+)/, 'https://dweb.link/ipfs/$1')}
+                        src={image.replace(/^ipfs:\/\/(.+)/, 'https://nftstorage.link/ipfs/$1')}
                       alt=''
                       width={200}
                       height={200}

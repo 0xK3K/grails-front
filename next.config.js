@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['dweb.link']
+    domains: ['nftstorage.link']
   },
   reactStrictMode: true,
   swcMinify: true,
