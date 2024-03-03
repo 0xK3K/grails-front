@@ -25,8 +25,7 @@ export default function Vault() {
     functionName: 'stored'
   })
 
-  // const ids = useMemo(() => (stored as Array<bigint>)?.map((id) => Number(id.toString())) || [], [stored])
-  const ids = [1]
+  const ids = useMemo(() => (stored as Array<bigint>)?.map((id) => Number(id.toString())) || [], [stored])
   const metadata = useMetadata(ids)
   const items: Array<Metadata> = useMemo(() => {
     const items = metadata.map(({ data }) => data)
