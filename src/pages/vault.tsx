@@ -25,7 +25,8 @@ export default function Vault() {
     functionName: 'stored'
   })
 
-  const ids = useMemo(() => (stored as Array<bigint>)?.map((id) => Number(id.toString())) || [], [stored])
+  // const ids = useMemo(() => (stored as Array<bigint>)?.map((id) => Number(id.toString())) || [], [stored])
+  const ids = [1]
   const metadata = useMetadata(ids)
   const items: Array<Metadata> = useMemo(() => {
     const items = metadata.map(({ data }) => data)
@@ -138,8 +139,8 @@ export default function Vault() {
                     {attributes
                       .slice(2)
                       .filter(({ trait_type }) => attributes[0].value !== 'Character' || trait_type !== 'Class')
-                      .map(({ trait_type, value }) => (
-                        <Box>
+                      .map(({ trait_type, value }, index) => (
+                        <Box key={index}>
                           <MainText heading>
                             {trait_type}: {value}
                           </MainText>

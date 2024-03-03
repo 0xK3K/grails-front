@@ -151,8 +151,8 @@ export default function Backpack() {
                       {attributes
                         .slice(2)
                         .filter(({ trait_type }) => attributes[0].value !== 'Character' || trait_type !== 'Class')
-                        .map(({ trait_type, value }) => (
-                          <Box>
+                        .map(({ trait_type, value }, index) => (
+                          <Box key={index}>
                             <MainText heading>
                               {trait_type}: {value}
                             </MainText>
