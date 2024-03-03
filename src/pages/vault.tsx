@@ -116,7 +116,7 @@ export default function Vault() {
                   className='relative mx-5 my-3 cursor-pointer'
                 >
                   <Image
-                    src={image.replace(/^ipfs:\/\/(.+)/, 'https://ipfs.io/ipfs/$1')}
+                    src={image.replace(/^ipfs:\/\/(.+)/, 'https://dweb.link/ipfs/$1')}
                     alt=''
                     width={200}
                     height={200}
