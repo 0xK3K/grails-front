@@ -23,7 +23,7 @@ export default function StarknetConfigWrapper({ children }: { children: ReactNod
           if (chain.id === mainnet.id) {
             return {
               chainId: constants.StarknetChainId.SN_MAIN,
-              nodeUrl: `https://starknet-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_STARKNET_ALCHEMY_KEY}`
+              nodeUrl: 'https://starknet-mainnet.blastapi.io/cc0d991d-bd8f-45ac-89c3-823291e558b4/rpc/v0_6'
             }
           } else if (chain.id === goerli.id) {
             return {

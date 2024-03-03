@@ -101,7 +101,9 @@ export default function Vault() {
         ) : (
           <Box col center>
             <Box center className={`mx-auto grid max-w-[1200px] grid-cols-2`}>
-              {items.map(({ id, name, image, attributes }, index) => (
+              {items
+                  .filter((x) => !!x)
+                  .map(({ id, name, image, attributes }, index) => (
                 <Box
                   onClick={() => {
                     if (idsToRetrieve.has(id)) {
