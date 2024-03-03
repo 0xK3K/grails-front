@@ -1,9 +1,9 @@
-import { Metadata } from 'next'
 import { useEffect, useRef } from 'react'
 import { useQueries } from '@tanstack/react-query'
+import { Metadata } from '@/types/app'
 
 const useIPFSBaseUrl = () => {
-  return 'https://ipfs.io/ipfs/bafybeievb4z6bkdakp4h4i6qvw57duzjvwgvek3lubfbd7us7x7l6zv5pe/'
+  return 'https://nftstorage.link/ipfs/bafybeiaudpv2a7k7rny3rfiy5ueidu32zcobgfor7t5b32jkykvdgpgdh4/'
 }
 
 const useIPFS = <TQueryFnData = unknown>({

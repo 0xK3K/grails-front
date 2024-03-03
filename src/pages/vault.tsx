@@ -1,8 +1,9 @@
 import { Box, CheckIcon, Container, MainText } from '@/components/Layout'
-import { useDispatch } from '@/hooks'
-import { abis, getContracts, metadata, serializeAddress, serializeU256, toast } from '@/misc'
+import { useDispatch, useMetadata } from '@/hooks'
+import { abis, getContracts, serializeAddress, serializeU256, toast } from '@/misc'
 import { addPendingTransaction } from '@/store/appSlice'
 import { TransactionType } from '@/types'
+import { Metadata } from '@/types/app'
 import { Button, Spinner } from '@nextui-org/react'
 import { useAccount, useContractRead, useContractWrite, useNetwork } from '@starknet-react/core'
 import Image from 'next/image'
@@ -25,26 +26,30 @@ export default function Vault() {
   })
 
   const ids = useMemo(() => (stored as Array<bigint>)?.map((id) => Number(id.toString())) || [], [stored])
-  const items = useMemo(() => {
-    const items = ids.map((id) => ({
-      id,
-      type: metadata[id - 1].type
-    }))
+  const metadata = useMetadata(ids)
+  const items: Array<Metadata> = useMemo(() => {
+    const items = metadata.map(({ data }) => data)
     items.sort(({ id: a }, { id: b }) => a - b)
     return items
-  }, [ids])
+  }, [metadata])
   const amountToRetrieve = useMemo(() => [...idsToRetrieve].length, [idsToRetrieve])
 
-  const animation = useCallback((type: string) => {
-    switch (type) {
-      case 'Grail':
-        return 'animate-[boxPulse_5s_ease-in-out_infinite_alternate]'
-      case 'Weapon':
-      case 'Armor':
-      case 'Potion':
-        return 'animate-[boxBounce_5s_ease-in-out_infinite_alternate]'
+  const colors = (rarity: string) => {
+    switch (rarity) {
+      case 'Mythical':
+        return { border: 'border-red-500', text: 'text-red-500' }
+      case 'Legendary':
+        return { border: 'border-orange-500', text: 'text-orange-500' }
+      case 'Epic':
+        return { border: 'border-purple-500', text: 'text-purple-500' }
+      case 'Rare':
+        return { border: 'border-blue-500', text: 'text-blue-500' }
+      case 'Uncommon':
+        return { border: 'border-green-500', text: 'text-green-500' }
+      default:
+        return { border: 'border-white', text: 'text-white' }
     }
-  }, [])
+  }
 
   const calls = useMemo(() => {
     if (address) {
@@ -95,8 +100,8 @@ export default function Vault() {
           </Box>
         ) : (
           <Box col center>
-            <Box center className={`mx-auto max-w-[1200px] flex-wrap`}>
-              {items.map(({ id, type }, index) => (
+            <Box center className={`mx-auto grid max-w-[1200px] grid-cols-2`}>
+              {items.map(({ id, name, image, attributes }, index) => (
                 <Box
                   onClick={() => {
                     if (idsToRetrieve.has(id)) {
@@ -106,26 +111,40 @@ export default function Vault() {
                     }
                   }}
                   key={index}
-                  col
-                  center
-                  className='relative m-3 cursor-pointer'
+                  className='relative mx-5 my-3 cursor-pointer'
                 >
-                  {type ? (
-                    <Image
-                      src={`/assets/${type.toLowerCase()}.png`}
-                      alt=''
-                      width={120}
-                      height={120}
-                      className={animation(type)}
-                    />
-                  ) : (
-                    <Box center className='size-[120px]'>
-                      <Spinner color='white' />
+                  <Image
+                    src={image.replace(/^ipfs:\/\/(.+)/, 'https://ipfs.io/ipfs/$1')}
+                    alt=''
+                    width={200}
+                    height={200}
+                    className={`rounded-xl border-1 ${colors(attributes[1].value).border}`}
+                  />
+                  <Box col className='ml-3'>
+                    <Box>
+                      <MainText heading className={colors(attributes[1].value).text}>
+                        {name.toUpperCase()}
+                      </MainText>
+                      <Box center>{idsToRetrieve.has(id) && <CheckIcon className='ml-2 size-5' />}</Box>
                     </Box>
-                  )}
-                  <Box center>
-                    <MainText heading>ID: {id}</MainText>
-                    {idsToRetrieve.has(id) && <CheckIcon className='ml-2 size-5' />}
+                    <Box>
+                      <MainText heading>ID: {id}</MainText>
+                    </Box>
+                    {attributes[0].value !== 'Character' && (
+                      <Box>
+                        <MainText heading>Rarity: {attributes[1].value}</MainText>
+                      </Box>
+                    )}
+                    {attributes
+                      .slice(2)
+                      .filter(({ trait_type }) => attributes[0].value !== 'Character' || trait_type !== 'Class')
+                      .map(({ trait_type, value }) => (
+                        <Box>
+                          <MainText heading>
+                            {trait_type}: {value}
+                          </MainText>
+                        </Box>
+                      ))}
                   </Box>
                 </Box>
               ))}
